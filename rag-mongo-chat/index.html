@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG Chat</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        #result { margin-top: 20px; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+    <h1>RAG Chat System</h1>
+    <input type="text" id="query" placeholder="Enter your query" style="width: 300px;">
+    <button onclick="askQuestion()">Ask</button>
+    <div id="result"></div>
+
+    <script>
+        async function askQuestion() {
+            const query = document.getElementById('query').value;
+            if (!query) return;
+            const response = await fetch(`/chat-stream?q=${encodeURIComponent(query)}`);
+            const data = await response.json();
+            document.getElementById('result').textContent = data.answer;
+        }
+    </script>
+</body>
+</html>
